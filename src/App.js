@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios"
 import './App.css';
+import ListItem from "./components/ListItem"
+import Search from "./components/Search"
 
 const App = () => {
   const [posts, setPosts] = useState([])
@@ -36,25 +38,16 @@ const App = () => {
   }, [])
 
   const postList = posts && posts.map(el => (
-    <div key={el.title} className="posts">
-      <p>{el.title}</p>
-    </div>
+    <ListItem key={el.title} title={el.title} />
   ))
 
   const filteredPostList = filteredPosts && filteredPosts.map(el => (
-    <div key={el.title} className="posts">
-      <p>{el.title}</p>
-    </div>
+    <ListItem key={el.title} title={el.title} />
   ))
 
   return (
     <div className="App">
-      <div>
-        <input type="text" name="search" value={searchText}
-        onChange={handleChange}
-        />
-        <button onClick={handleClick}>Clear</button>
-      </div>
+      <Search searchText={searchText} handleChange={handleChange} handleClick={handleClick} />
       {searchText === "" ? postList : filteredPostList}
     </div>
   );
